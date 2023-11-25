@@ -1,0 +1,34 @@
+npm i dotenv express promise-mysql
+npm i @babel/cli @babel/core @babel/node @babel/preset-env morgan nodemon -D 
+
+
+// aqui esta tambien el script para la base de datos que hice de prueba para ver si funciona esta API
+
+create database mofly;
+
+use mofly;
+
+create table user(
+id int not null auto_increment primary key,
+name varchar(30) not null,
+status varchar(15) not null  
+);
+
+insert into user values
+(1,"Juan Carlos Gonzalez", "Activo"),
+(2,"Leonardo Saul Avila", "Activo"),
+(3,"Adan Tapia", "Activo");
+
+
+
+
+//en postman pueden validar si la API funciona una vez que hayan creado la base de datos, 
+ojo primero chequen en el archivo llamado .env que sus credenciales en la db sean los que estan ahi guardados, si no cambienlos a los suyos
+es decir, 
+user = root
+password = server (en mi caso, en el suyo si no tiene password no le pongan nada)
+
+
+Ahora vayan a postman o dentro el mismo navegador usen estos URL
+
+localhost:4000/api/users
