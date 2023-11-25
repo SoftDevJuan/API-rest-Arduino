@@ -29,6 +29,34 @@ user = root
 password = server (en mi caso, en el suyo si no tiene password no le pongan nada)
 
 
-Ahora vayan a postman o dentro el mismo navegador usen estos URL
+Ahora vayan a postman
 
-localhost:4000/api/users
+usando GET
+localhost:4000/api/users 
+:esto llamara al metodo getUsers del archivo Users.controller.js
+
+usando GET
+localhost:4000/api/users/1 
+:esto llamara al metodo getUser del archivo Users.controller.js, si desean consultar otro user cambien el numero de id que esta al final de la URL
+
+usando POST
+localhost:4000/api/users 
+:esto llamara al metodo addUser del archivo Users.controller.js
+a la opcion
+boddy --> raw --> JSON
+e ingresan los datos a enviar:
+{
+    "id":"4",
+    "name":"Jose:,
+    "status":"Activo"
+}
+
+
+usando PUT
+localhost:4000/api/users/1 
+:esto llamara al metodo updateUser del archivo Users.controller.js, si desean actualizar otro user cambien el numero de id que esta al final de la URL
+
+
+usando DELETE
+localhost:4000/api/users/1 
+:esto llamara al metodo deleteUser del archivo Users.controller.js, si desean eliminar otro user cambien el numero de id que esta al final de la URL
