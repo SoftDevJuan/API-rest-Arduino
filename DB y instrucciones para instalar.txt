@@ -1,0 +1,80 @@
+npm i dotenv express promise-mysql
+npm i @babel/cli @babel/core @babel/node @babel/preset-env morgan nodemon -D 
+npm run dev
+
+
+// aqui esta tambien el script para la base de datos que hice de prueba para ver si funciona esta API
+
+
+drop database rfid_access;
+create database rfid_access;
+
+use rfid_access;
+
+create table user(
+id int not null auto_increment primary key,
+name varchar(30) not null,
+u_access varchar(30) not null,
+rfid_id varchar(30) not null
+);
+
+create table access_log(
+log_id int not null auto_increment primary key,
+user_id int,
+user_name varchar(30),
+access_resp varchar(30) not null,
+log_date datetime not null,
+rfid_id varchar(30) not null,
+foreign key (user_id) references user(id)
+);
+
+
+insert into user values
+(1, "Juan Carlos Gonzalez","Permitido","0xAC, 0xE5, 0xD4, 0xAA"),
+(2, "Leonardo Saul Avila","Permitido","0xE0, 0xA4, 0x56, 0xC2"),
+(3, "Adan Tapia","Permitido","0xE1, 0xB2, 0x11, 0x45");
+(5, "Mikael Gonzalez","Permitido","63a1c691");
+
+DELIMITER //
+CREATE PROCEDURE RegistrarAcceso(IN p_rfid_id VARCHAR(30))
+BEGIN
+    DECLARE v_user_id INT;
+    DECLARE v_user_name VARCHAR(30);
+    
+    -- Verificar si el RFID existe en la tabla user
+    SELECT id, name INTO v_user_id, v_user_name FROM user WHERE rfid_id = p_rfid_id;
+    
+    -- Si no existe, registrar acceso denegado en access_log
+    IF v_user_id IS NULL THEN
+        INSERT INTO access_log (user_id, user_name, access_resp, log_date, rfid_id)
+        VALUES (NULL, NULL, 'Denegado', NOW(), p_rfid_id);
+        
+        -- Mostrar mensaje de respuesta en pantalla
+        SELECT 'Denegado' AS AccesoRespuesta;
+        
+    -- Si existe, registrar acceso permitido en access_log
+    ELSE
+        INSERT INTO access_log (user_id, user_name, access_resp, log_date, rfid_id)
+        VALUES (v_user_id, v_user_name, 'Permitido', NOW(), p_rfid_id);
+        
+        -- Mostrar mensaje de respuesta en pantalla
+        SELECT 'Permitido' AS AccesoRespuesta;
+    END IF;
+    
+END //
+DELIMITER ;
+
+
+
+
+call Registraracceso("0xAC, 0xE5, 0xD4, 0xAA");
+
+call Registraracceso("0xE0, 0xA4, 0x56, 0xC2");
+
+call Registraracceso("0xE1, 0xB2, 0x11, 0x45");
+
+call Registraracceso("0xE1, 0xB2, 0x11, 0x44");
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////7
+

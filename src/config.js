@@ -3,8 +3,8 @@ import { config } from "dotenv";
 config();
 
 export default {
-    host: process.env.HOST || "",
-    database: process.env.DATABASE || "",
+    host: "localhost",//process.env.HOST || "",
+    database: "rfid_access", // process.env.DATABASE || "",
     user: "root" ,//process.env.USER || "",
-    password: process.env.PASSWORD || ""
+    password: ""//process.env.PASSWORD || ""
 };
